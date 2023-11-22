@@ -56,7 +56,41 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+   MacUILib_clearScreen(); 
+    
+    int i = 0;
+    int j = 0;
+
+    
+    objPos objectPos(7, 12, 'W');
+
+        for (i = 0; i < 10; i++)
+        {
+            
+
+            for (j = 0; j < 20; j++)
+            {
+                objPos currentPos(i, j, ' ');
+                
+                if (i == 0 || i == 9 || j == 0 || j == 19)
+                {
+                    objPos borderPos(i, j, '#');
+                    MacUILib_printf("%c", borderPos.getSymbol());
+                }
+
+                else if (objectPos.isPosEqual(&currentPos))
+                {
+                    MacUILib_printf("%c", objectPos.getSymbol());
+                }
+                 
+                else 
+                {
+                    MacUILib_printf("%c", currentPos.getSymbol());
+                }
+            }
+
+            printf("\n");
+        }
 
 }
 
