@@ -56,14 +56,16 @@ void Initialize(void)
 
 void GetInput(void)
 {
-   myGM->setInput(myGM->getInput());
+   myGM->setInput(myGM->getInput()); //ask about this section
 }
+
 
 void RunLogic(void)
 {
-    //myGM->getInput();
+    myGM->getInput();
     myPlayer-> updatePlayerDir();
     myPlayer->movePlayer();
+    myGM->clearInput();
     
 }
 
@@ -124,6 +126,6 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
-  
+    //ask about deleting off of the heap    
     MacUILib_uninit();
 }
