@@ -67,6 +67,11 @@ void DrawScreen(void)
 
         for (i = 0; i < 10; i++)
         {
+<<<<<<< HEAD
+=======
+            
+
+>>>>>>> d2ba28e795f7b28ed55c846d91e39ea8ae0d98d9
             for (j = 0; j < 20; j++)
             {
                 objPos currentPos(i, j, ' ');
