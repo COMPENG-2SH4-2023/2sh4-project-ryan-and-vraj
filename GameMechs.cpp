@@ -3,12 +3,9 @@
 
 GameMechs::GameMechs()
 {
-<<<<<<< HEAD
-    input = NULL;
-=======
->>>>>>> d2ba28e795f7b28ed55c846d91e39ea8ae0d98d9
-    boardSizeX = 30;
-    boardSizeY = 15;
+    input = 0;
+    boardSizeX = 15;
+    boardSizeY = 30;
     exitFlag = false;
     loseFlag = false;
     score = 0;
@@ -18,10 +15,7 @@ GameMechs::GameMechs()
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
-<<<<<<< HEAD
-    input = NULL;
-=======
->>>>>>> d2ba28e795f7b28ed55c846d91e39ea8ae0d98d9
+    input = 0;
     boardSizeX = boardX;
     boardSizeY = boardY;
     exitFlag = false;
@@ -47,12 +41,9 @@ bool GameMechs::getLoseFlagStatus()
 
 char GameMechs::getInput()
 {
-<<<<<<< HEAD
     if(MacUILib_hasChar()) {
         input = MacUILib_getChar();
     } 
-=======
->>>>>>> d2ba28e795f7b28ed55c846d91e39ea8ae0d98d9
     return input;
 }
 
@@ -85,19 +76,6 @@ void GameMechs::setInput(char this_input)
 void GameMechs::clearInput()
 {
     input = '\0';
-<<<<<<< HEAD
-=======
-}
-
-int GameMechs::getScore()
-{
-    return score;
-}
-
-void GameMechs::incrementScore()
-{
-    score++;
->>>>>>> d2ba28e795f7b28ed55c846d91e39ea8ae0d98d9
 }
 
 int GameMechs::getScore()

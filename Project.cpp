@@ -2,13 +2,17 @@
 #include "MacUILib.h"
 #include "objPos.h"
 #include "Player.h"
+#include "GameMechs.h"
 
 
 using namespace std;
 
 #define DELAY_CONST 100000
 
-bool exitFlag;
+GameMechs* myGM;
+Player*  myPlayer; // both are references
+
+bool exitFlag; //ask to comment or not
 
 void Initialize(void);
 void GetInput(void);
@@ -24,7 +28,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(myGM->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -42,7 +46,9 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    exitFlag = false;
+    myGM = new GameMechs(15,30); // makes the board size 30x15
+    myPlayer = new Player(myGM);
+    //exitFlag = false;
 }
 
 void GetInput(void)
@@ -52,49 +58,54 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    
+    myPlayer-> updatePlayerDir();
 }
 
 void DrawScreen(void)
 {
    MacUILib_clearScreen(); 
     
-    int i = 0;
-    int j = 0;
-
+    objPos tempPos;
+    myPlayer->getPlayerPos(tempPos); // get player pos
     
-    objPos objectPos(7, 12, 'W');
+    //objPos myPlayer->7, 12, 'W');
 
-        for (i = 0; i < 10; i++)
+        for (int i = 0; i < myGM->getBoardSizeX(); i++)
         {
-<<<<<<< HEAD
-=======
-            
-
->>>>>>> d2ba28e795f7b28ed55c846d91e39ea8ae0d98d9
-            for (j = 0; j < 20; j++)
+            for (int j = 0; j < myGM->getBoardSizeY(); j++)
             {
                 objPos currentPos(i, j, ' ');
                 
-                if (i == 0 || i == 9 || j == 0 || j == 19)
+                if (i == 0 || i == myGM->getBoardSizeX() -1 || j == 0 || j == myGM->getBoardSizeY()-1)
                 {
                     objPos borderPos(i, j, '#');
                     MacUILib_printf("%c", borderPos.getSymbol());
                 }
 
-                else if (objectPos.isPosEqual(&currentPos))
+                else if (tempPos.isPosEqual(&currentPos))
                 {
-                    MacUILib_printf("%c", objectPos.getSymbol());
+                    MacUILib_printf("%c", tempPos.symbol);
                 }
-                 
+
+               
                 else 
                 {
                     MacUILib_printf("%c", currentPos.getSymbol());
                 }
+                //MacUILib_printf("i: %d j:%d\n", i, j);
             }
 
-            printf("\n");
+            MacUILib_printf("\n");
+
+            
         }
+
+        
+        MacUILib_printf("Player Position: <%d,%d> + %c\n", tempPos.x, tempPos.y, tempPos.symbol);
+        MacUILib_printf("BoardSize: %dx%d, Player Position: <%d,%d> + %c\n", 
+                        myGM->getBoardSizeX(), 
+                        myGM->getBoardSizeY(), 
+                        tempPos.x, tempPos.y, tempPos.symbol);
 
 }
 
