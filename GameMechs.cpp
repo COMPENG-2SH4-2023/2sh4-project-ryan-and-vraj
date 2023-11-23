@@ -4,8 +4,8 @@
 GameMechs::GameMechs()
 {
     input = 0;
-    boardSizeX = 15;
-    boardSizeY = 30;
+    boardSizeX = 30;
+    boardSizeY = 15;
     exitFlag = false;
     loseFlag = false;
     score = 0;

@@ -12,7 +12,7 @@ using namespace std;
 GameMechs* myGM;
 Player*  myPlayer; // both are references
 
-bool exitFlag; //ask to comment or not
+//bool exitFlag; //ask to comment or not
 
 void Initialize(void);
 void GetInput(void);
@@ -46,7 +46,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs(15,30); // makes the board size 30x15
+    myGM = new GameMechs(30,15); // makes the board size 30x15
     myPlayer = new Player(myGM);
     //exitFlag = false;
 }
@@ -70,13 +70,13 @@ void DrawScreen(void)
     
     //objPos myPlayer->7, 12, 'W');
 
-        for (int i = 0; i < myGM->getBoardSizeX(); i++)
+        for (int i = 0; i < myGM->getBoardSizeY(); i++)
         {
-            for (int j = 0; j < myGM->getBoardSizeY(); j++)
+            for (int j = 0; j < myGM->getBoardSizeX(); j++)
             {
                 objPos currentPos(i, j, ' ');
                 
-                if (i == 0 || i == myGM->getBoardSizeX() -1 || j == 0 || j == myGM->getBoardSizeY()-1)
+                if (i == 0 || i == myGM->getBoardSizeY() -1 || j == 0 || j == myGM->getBoardSizeX()-1)
                 {
                     objPos borderPos(i, j, '#');
                     MacUILib_printf("%c", borderPos.getSymbol());
