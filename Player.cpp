@@ -5,8 +5,8 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-    playerPos.setObjPos(mainGameMechsRef->getBoardSizeY()/2,
-                        mainGameMechsRef->getBoardSizeX()/2,
+    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2,
+                        mainGameMechsRef->getBoardSizeY()/2,
                         '*');
     // more actions to be included
 
@@ -75,13 +75,30 @@ void Player::movePlayer()
 
     switch(myDir){
         case UP:
-            playerPos.y = (playerPos.y-1+boardY)%boardY; //in chance of negative add boardY size
+            //playerPos.y = (playerPos.y-1+boardY)%boardY; //in chance of negative add boardY size
+            playerPos.y--;
+            if(playerPos.y < 1){
+                playerPos.y = boardY-1;
+            }
         case DOWN:
-            playerPos.y = (playerPos.y+1)%boardY; //dont need to add since playerPos.y can only exceed and modulo covers that 
+           // playerPos.y = (playerPos.y+1)%boardY; //dont need to add since playerPos.y can only exceed and modulo covers that 
+            playerPos.y++;
+            if(playerPos.y > boardY-1){
+                playerPos.y = 1;
+            }
         case LEFT:
-            playerPos.x = (playerPos.x-1+boardX)%boardX; // same reasoning as y positions
+            playerPos.x--;
+            //playerPos.x = (playerPos.x-1+boardX)%boardX; // same reasoning as y positions
+            if(playerPos.x < 1){
+                playerPos.x = boardX-1;
+            }
+
         case RIGHT:
-            playerPos.x = (playerPos.x+1)%boardX;
+            playerPos.x++;
+            //playerPos.x = (playerPos.x+1)%boardX;
+            if(playerPos.x > boardX-1){
+                playerPos.x = 1;
+            }
         default:
             break;
     }

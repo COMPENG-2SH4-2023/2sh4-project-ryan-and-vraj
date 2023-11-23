@@ -7,6 +7,8 @@
 
 using namespace std;
 
+
+
 #define DELAY_CONST 100000
 
 GameMechs* myGM;
@@ -45,6 +47,7 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
+    
 
     myGM = new GameMechs(30,15); // makes the board size 30x15
     myPlayer = new Player(myGM);
@@ -53,12 +56,15 @@ void Initialize(void)
 
 void GetInput(void)
 {
-   
+   myGM->setInput(myGM->getInput());
 }
 
 void RunLogic(void)
 {
+    //myGM->getInput();
     myPlayer-> updatePlayerDir();
+    myPlayer->movePlayer();
+    
 }
 
 void DrawScreen(void)
@@ -74,7 +80,7 @@ void DrawScreen(void)
         {
             for (int j = 0; j < myGM->getBoardSizeX(); j++)
             {
-                objPos currentPos(i, j, ' ');
+                objPos currentPos(j, i, ' ');
                 
                 if (i == 0 || i == myGM->getBoardSizeY() -1 || j == 0 || j == myGM->getBoardSizeX()-1)
                 {
@@ -101,7 +107,7 @@ void DrawScreen(void)
         }
 
         
-        MacUILib_printf("Player Position: <%d,%d> + %c\n", tempPos.x, tempPos.y, tempPos.symbol);
+        //MacUILib_printf("Input: %c\n", myGM->getInput());
         MacUILib_printf("BoardSize: %dx%d, Player Position: <%d,%d> + %c\n", 
                         myGM->getBoardSizeX(), 
                         myGM->getBoardSizeY(), 
