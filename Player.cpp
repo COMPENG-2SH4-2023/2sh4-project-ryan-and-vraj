@@ -45,26 +45,22 @@ void Player::updatePlayerDir()
                 myDir = UP;
                 
             }
-            MacUILib_printf("W");
             break;
         case 'a': //for a
             if(myDir == STOP || myDir == UP || myDir == DOWN){
                 myDir = LEFT;
                 
             }
-            MacUILib_printf("A");
             break;
         case 's': //for s
             if(myDir == STOP || myDir == LEFT || myDir == RIGHT){
                 myDir = DOWN;
             }
-            MacUILib_printf("S");
             break; 
         case 'd': //for d
             if(myDir == STOP || myDir == UP || myDir == DOWN){
                 myDir = RIGHT;
             }
-            MacUILib_printf("D");
             break;   
         default:
             break;      

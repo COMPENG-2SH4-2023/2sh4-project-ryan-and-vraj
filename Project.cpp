@@ -11,6 +11,9 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
+
+//OOD benefit, very limited globa variable declaration
+//In Advanced OOD, there won't be any global variables
 GameMechs* myGM;
 Player*  myPlayer; // both are references
 
@@ -56,16 +59,16 @@ void Initialize(void)
 
 void GetInput(void)
 {
-   myGM->setInput(myGM->getInput()); //ask about this section
+   myGM->getInput(); //ask about this section
 }
 
 
 void RunLogic(void)
 {
-    myGM->getInput();
+    //myGM->getInput();
     myPlayer-> updatePlayerDir();
     myPlayer->movePlayer();
-    myGM->clearInput();
+    myGM->clearInput(); //dont repeadtedly process same input
     
 }
 
@@ -127,5 +130,10 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();    
     //ask about deleting off of the heap    
+    
     MacUILib_uninit();
+
+    //remove heap instances
+    delete[] myGM;
+    delete[] myPlayer;
 }

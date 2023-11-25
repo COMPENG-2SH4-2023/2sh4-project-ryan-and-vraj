@@ -26,7 +26,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
-    delete[] GameMechs
+    //delete[] GameMechs //what to do??
 }
 
 bool GameMechs::getExitFlagStatus()
@@ -43,6 +43,8 @@ char GameMechs::getInput()
 {
     if(MacUILib_hasChar()) {
         input = MacUILib_getChar();
+    } else if(input == 27){ // escape as exit
+        setExitTrue();
     } 
     return input;
 }
