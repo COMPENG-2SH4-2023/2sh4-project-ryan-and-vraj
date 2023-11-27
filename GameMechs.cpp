@@ -1,5 +1,6 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
+#include "Player.h"
 
 GameMechs::GameMechs()
 {
@@ -9,6 +10,8 @@ GameMechs::GameMechs()
     exitFlag = false;
     loseFlag = false;
     score = 0;
+
+    foodPos.setObjPos(1, 1, 'o');
     
 
 }
@@ -21,6 +24,8 @@ GameMechs::GameMechs(int boardX, int boardY)
     exitFlag = false;
     loseFlag = false;
     score = 0;
+
+    foodPos.setObjPos(-1, -1, 'o');
 }
 
 // do you need a destructor?
@@ -89,3 +94,4 @@ void GameMechs::incrementScore()
 {
     score++;
 }
+

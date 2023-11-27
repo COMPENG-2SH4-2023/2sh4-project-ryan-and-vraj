@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "MacUILib.h"
+#include "GameMechs.h"
 
 Player::Player(GameMechs* thisGMRef)
 {

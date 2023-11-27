@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "Player.h"
 #include "GameMechs.h"
+#include "Food.h"
 
 
 using namespace std;
@@ -16,6 +17,7 @@ using namespace std;
 //In Advanced OOD, there won't be any global variables
 GameMechs* myGM;
 Player*  myPlayer; // both are references
+Food* tempFood;
 
 //bool exitFlag; //ask to comment or not
 
@@ -55,6 +57,11 @@ void Initialize(void)
     myGM = new GameMechs(30,15); // makes the board size 30x15
     myPlayer = new Player(myGM);
     //exitFlag = false;
+
+    //temporary position of the player
+    objPos tempPos; 
+    myPlayer-> getPlayerPos(tempPos);
+    tempFood = new Food(tempPos);
 }
 
 void GetInput(void)
@@ -65,10 +72,22 @@ void GetInput(void)
 
 void RunLogic(void)
 {
+    
     //myGM->getInput();
     myPlayer-> updatePlayerDir();
     myPlayer->movePlayer();
+
     myGM->clearInput(); //dont repeadtedly process same input
+    
+    objPos tempPos; 
+    myPlayer-> getPlayerPos(tempPos);
+
+    objPos tempPosFood;
+    tempFood->getFoodPos(tempPosFood);
+
+    if((tempPos.x == tempPosFood.x) && (tempPos.y == tempPosFood.y)){
+        tempFood->generateFood(tempPos);
+    }
     
 }
 
@@ -78,7 +97,10 @@ void DrawScreen(void)
     
     objPos tempPos;
     myPlayer->getPlayerPos(tempPos); // get player pos
-    
+
+    //user to get coordinates of tempFood
+    objPos tempPosFood;
+    tempFood->getFoodPos(tempPosFood);
     //objPos myPlayer->7, 12, 'W');
 
         for (int i = 0; i < myGM->getBoardSizeY(); i++)
@@ -96,6 +118,13 @@ void DrawScreen(void)
                 else if (tempPos.isPosEqual(&currentPos))
                 {
                     MacUILib_printf("%c", tempPos.symbol);
+                }
+                
+                // Print food symbol randomly
+                else if (i == tempPosFood.y && j == tempPosFood.x)
+                {
+
+                    MacUILib_printf("%c", tempPosFood.symbol);
                 }
 
                
@@ -137,3 +166,12 @@ void CleanUp(void)
     delete[] myGM;
     delete[] myPlayer;
 }
+
+/*
+
+Food foodIntance = Food(player_pos); // objPo, 0, 0, o
+
+
+
+
+\*/
