@@ -110,25 +110,25 @@ void Player::movePlayer()
         playerPos.y--;
         //if playerPos is too exceeds the border, then reset back at bottom of border
         if(playerPos.y < 1){
-            playerPos.y = boardY-1;
+            playerPos.y = boardY-2;
         }
     } else if (myDir == LEFT){
         playerPos.x--;
         //if the playerPos is too much to the left then reset the position all the way to the right before border
         if(playerPos.x < 1){
-            playerPos.x = boardX-1;
+            playerPos.x = boardX-2;
         }
     } else if (myDir == DOWN){
         playerPos.y++;
         //if the playerPos exceeds the border at the bottom, then reset him back to the top
-        if(playerPos.y > boardY-1){
+        if(playerPos.y > boardY-2){
             playerPos.y = 1;
         }
 
     } else if (myDir == RIGHT){
         playerPos.x++;
         //if the playerPos exceeds the border at the right, then reset back to the left
-        if(playerPos.x > boardX-1){
+        if(playerPos.x > boardX-2){
             playerPos.x = 1;
         }
     }
