@@ -26,6 +26,9 @@ void objPosArrayList::insertHead(objPos thisPos)
 
     //error check
     //check if list size is at capcaity, if yes, at capacity, don't insert
+    if(listSize == arrayCapacity){
+        return;
+    }
     for(int i =listSize; i >0; i--){
         aList[i].setObjPos(aList[i-1]); // object position at previous element
         //shuffles all elements towards tail
@@ -37,12 +40,18 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
+    if(listSize == arrayCapacity){
+        return;
+    }
     aList[listSize++] = thisPos;
 }
 
 void objPosArrayList::removeHead()
 {
 
+    if(listSize<=0){ //error catching
+        return;
+    }
     //grab element i+1 and overwrite with i (shuffle left to remove head)
     for(int i = 0; i < listSize-1; i ++){
         aList[i].setObjPos(aList[i+1]);
@@ -56,6 +65,10 @@ void objPosArrayList::removeHead()
 
 void objPosArrayList::removeTail()
 {
+   
+    if(listSize<=0){ //error catching
+        return;
+    }
     listSize--; //last guy in the lst gets deleted automatically
 }
 
