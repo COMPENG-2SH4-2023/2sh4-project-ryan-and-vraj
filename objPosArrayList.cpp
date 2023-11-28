@@ -88,9 +88,9 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
     if(index >=0 && index < arrayCapacity){
         returnPos = aList[index];
     }
-    // else{
-    //     returnPos.setObjPos('')
-    // }
+    else{
+        return;
+     }
 }
 
 //Once passed all test cases, copy paste .h and this .cpp file into the project

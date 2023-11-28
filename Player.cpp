@@ -6,12 +6,21 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2,
+
+    objPos tempPos;
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2,
                         mainGameMechsRef->getBoardSizeY()/2,
                         '*');
     // more actions to be included
 
-    //no heap memeber yet -  never used new keyword
+    playerPosList = new objPosArrayList();
+    playerPosList->insertHead(tempPos);
+
+    //for debugging purpose, insert anotehr 4 segments
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
 
 }
 
@@ -20,12 +29,14 @@ Player::~Player()
 {
     // delete any heap members here
     //empty for now
+    delete playerPosList;
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+objPosArrayList* Player::getPlayerPos()
 {
-    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
+    //returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
     // return the reference to the playerPos arrray list (dont worrty about this for now)
+    return playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -71,67 +82,43 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-
+    objPos currHead;
+    playerPosList->getHeadElement(currHead); // holding pos information of the curent head
     //board size from gamemechanism
     int boardX = mainGameMechsRef->getBoardSizeX();
     int boardY = mainGameMechsRef->getBoardSizeY();
 
-    // switch(myDir){
-    //     case UP:
-    //         //playerPos.y = (playerPos.y-1+boardY)%boardY; //in chance of negative add boardY size
-    //         playerPos.y--;
-    //         if(playerPos.y < 1){
-    //             playerPos.y = boardY-1;
-    //         }
-    //     case DOWN:
-    //        // playerPos.y = (playerPos.y+1)%boardY; //dont need to add since playerPos.y can only exceed and modulo covers that 
-    //         playerPos.y++;
-    //         if(playerPos.y > boardY-1){
-    //             playerPos.y = 1;
-    //         }
-    //     case LEFT:
-    //         playerPos.x--;
-    //         //playerPos.x = (playerPos.x-1+boardX)%boardX; // same reasoning as y positions
-    //         if(playerPos.x < 1){
-    //             playerPos.x = boardX-1;
-    //         }
-
-    //     case RIGHT:
-    //         playerPos.x++;
-    //         //playerPos.x = (playerPos.x+1)%boardX;
-    //         if(playerPos.x > boardX-1){
-    //             playerPos.x = 1;
-    //         }
-    //     default:
-    //         break;
-    // }
 
     if(myDir == UP){
-        playerPos.y--;
+        currHead.y--;
         //if playerPos is too exceeds the border, then reset back at bottom of border
-        if(playerPos.y < 1){
-            playerPos.y = boardY-2;
+        if(currHead.y < 1){
+            currHead.y = boardY-2;
         }
     } else if (myDir == LEFT){
-        playerPos.x--;
+        currHead.x--;
         //if the playerPos is too much to the left then reset the position all the way to the right before border
-        if(playerPos.x < 1){
-            playerPos.x = boardX-2;
+        if(currHead.x < 1){
+            currHead.x = boardX-2;
         }
     } else if (myDir == DOWN){
-        playerPos.y++;
+        currHead.y++;
         //if the playerPos exceeds the border at the bottom, then reset him back to the top
-        if(playerPos.y > boardY-2){
-            playerPos.y = 1;
+        if(currHead.y > boardY-2){
+            currHead.y = 1;
         }
 
     } else if (myDir == RIGHT){
-        playerPos.x++;
+        currHead.x++;
         //if the playerPos exceeds the border at the right, then reset back to the left
-        if(playerPos.x > boardX-2){
-            playerPos.x = 1;
+        if(currHead.x > boardX-2){
+            currHead.x = 1;
         }
     }
 
-}
+    //new currenth ead should be inserted ot the head of the list
+    playerPosList->insertHead(currHead);
+    //remopve tail
+    playerPosList->removeTail();
 
+}
