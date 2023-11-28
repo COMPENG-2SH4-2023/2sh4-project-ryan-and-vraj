@@ -25,7 +25,7 @@ Food::~Food()
 }
 void Food::generateFood(objPos blockOff)
 {
-    
+    srand(time(0));
     int candX = 0;
     int candY = 0;
 
