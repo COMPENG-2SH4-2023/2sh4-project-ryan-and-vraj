@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "MacUILib.h"
 #include "GameMechs.h"
+#include "Food.h"
+#include "objPos.h"
 
 Player::Player(GameMechs* thisGMRef)
 {
@@ -17,10 +19,10 @@ Player::Player(GameMechs* thisGMRef)
     playerPosList->insertHead(tempPos);
 
     //for debugging purpose, insert anotehr 4 segments
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
 
 }
 
@@ -121,4 +123,53 @@ void Player::movePlayer()
     //remopve tail
     playerPosList->removeTail();
 
+}
+
+
+bool Player::checkFoodConsumption(){
+
+    objPos tempFoodPos;
+    food->getFoodPos(tempFoodPos);
+
+    objPos currHead;
+    playerPosList->getHeadElement(currHead);
+    
+    if(currHead.isPosEqual(&tempFoodPos)){
+        increasePlayerLength();
+        mainGameMechsRef->incrementScore();
+
+        //implement after figuring out how arrayList implementation works
+        // objPosArrayList* playerBody = getPlayerPos();
+        // food->generateFood(*playerBody, currHead);
+
+        return true;
+
+    }
+    return false;
+}
+
+
+
+
+void Player::increasePlayerLength(){
+    objPos tailPos;
+    playerPosList->getTailElement(tailPos);
+    playerPosList->insertTail(tailPos);
+}
+
+
+bool Player::checkSelfCollision(){ //the program suspends immediately whenever snake body is more than one, why?
+    objPos headPos;
+    playerPosList->getHeadElement(headPos); //can i just add headPos as a private memeber so i donty have tp declare it everytime i want to use it
+
+    
+    for(int i =1; i < playerPosList->getSize(); i++){ //starting from 1 so it can skip the head
+        objPos currentPos;
+        playerPosList->getElement(currentPos,i); //get the current element of each of the player body
+
+        if(headPos.isPosEqual(&currentPos)){ //if the head touches any other element of the player then collision is detected
+            return true;
+        }
+    }
+    return false; // no collisiojn
 }

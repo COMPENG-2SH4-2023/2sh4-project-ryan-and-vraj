@@ -1,4 +1,5 @@
-
+#ifndef FOOD_H
+#define FOOD_H
 
 class Food
 {
@@ -14,7 +15,9 @@ class Food
         //need to accept playerbody array list
         //go through each array list element to make sure they are 
         //all blocked off from random food gerenatiuon
-        
+
     
         void getFoodPos(objPos &returnPos);
 };
+
+#endif

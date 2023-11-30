@@ -49,6 +49,10 @@ class GameMechs
         int getScore();
         void incrementScore();
 
+
+        //for suicide (self collision)
+        
+
         
       
 

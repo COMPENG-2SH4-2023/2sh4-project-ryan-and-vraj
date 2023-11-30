@@ -4,6 +4,7 @@
 #include "GameMechs.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Food.h" //including FOOD class
 
 class Player
 {
@@ -32,7 +33,9 @@ class Player
         //dfo not remove tail
         // otehrwise, remobve tail and move on
 
-
+        bool checkFoodConsumption();
+        void increasePlayerLength();
+        bool checkSelfCollision();
 
 
         //add self collision check
@@ -50,6 +53,9 @@ class Player
 
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
+
+        //need reference to Food class
+        Food* food;
 };
 
 #endif

@@ -80,8 +80,9 @@ void RunLogic(void)
     //myGM->getInput();
     myPlayer-> updatePlayerDir();
     myPlayer->movePlayer();
-
+    //myPlayer->checkFoodConsumption();
     myGM->clearInput(); //dont repeadtedly process same input
+    
     
     // objPos tempPos; 
     // myPlayer-> getPlayerPos(tempPos);
@@ -91,6 +92,9 @@ void RunLogic(void)
 
     // if((tempPos.x == tempPosFood.x) && (tempPos.y == tempPosFood.y)){
         
+    // }
+    // if(myPlayer->checkSelfCollision()){
+    //     myGM->setExitTrue();
     // }
     
 }
