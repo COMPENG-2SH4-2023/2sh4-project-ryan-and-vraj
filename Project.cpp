@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "GameMechs.h"
 #include "Food.h"
+#include "objPosArrayList.h"
 
 
 using namespace std;
@@ -59,9 +60,12 @@ void Initialize(void)
     //exitFlag = false;
 
     //temporary position of the player
-    objPos tempPos; 
-    myPlayer-> getPlayerPos(tempPos);
-    tempFood = new Food(tempPos);
+    // objPos tempPos; 
+    // myPlayer-> getPlayerPos(tempPos);
+    objPos tempPos{-1,-1,'%'}; // for testing only
+    tempFood = new Food(tempPos); //doublwe check if we need this
+    tempFood->generateFood(tempPos); //how to tunr this into arrayList operation
+    
 }
 
 void GetInput(void)
@@ -79,15 +83,15 @@ void RunLogic(void)
 
     myGM->clearInput(); //dont repeadtedly process same input
     
-    objPos tempPos; 
-    myPlayer-> getPlayerPos(tempPos);
+    // objPos tempPos; 
+    // myPlayer-> getPlayerPos(tempPos);
 
-    objPos tempPosFood;
-    tempFood->getFoodPos(tempPosFood);
+    // objPos tempPosFood;
+    // tempFood->getFoodPos(tempPosFood);
 
-    if((tempPos.x == tempPosFood.x) && (tempPos.y == tempPosFood.y)){
-        tempFood->generateFood(tempPos);
-    }
+    // if((tempPos.x == tempPosFood.x) && (tempPos.y == tempPosFood.y)){
+        
+    // }
     
 }
 
@@ -95,9 +99,12 @@ void DrawScreen(void)
 {
    MacUILib_clearScreen(); 
     
-    objPos tempPos;
-    myPlayer->getPlayerPos(tempPos); // get player pos
+    // objPos tempPos;
+    // myPlayer->getPlayerPos(tempPos); // get player pos
 
+    objPosArrayList* playerBody = myPlayer->getPlayerPos();
+    objPos tempBody;
+    bool drawn;
     //user to get coordinates of tempFood
     objPos tempPosFood;
     tempFood->getFoodPos(tempPosFood);
@@ -107,18 +114,30 @@ void DrawScreen(void)
         {
             for (int j = 0; j < myGM->getBoardSizeX(); j++)
             {
+                
+                drawn = false;
+                //iterate thorugh palyerbody and check if the copy matches i and j
+                for(int k =0; k < playerBody->getSize(); k++){
+
+                    playerBody->getElement(tempBody, k);
+
+                    if(tempBody.x == j && tempBody.y == i){
+                        MacUILib_printf("%c", tempBody.symbol);
+                        drawn = true;
+                    }
+
+                }
+                if(drawn) continue;
                 objPos currentPos(j, i, ' ');
                 
+
+
                 if (i == 0 || i == myGM->getBoardSizeY() -1 || j == 0 || j == myGM->getBoardSizeX()-1)
                 {
                     objPos borderPos(i, j, '#');
                     MacUILib_printf("%c", borderPos.getSymbol());
                 }
 
-                else if (tempPos.isPosEqual(&currentPos))
-                {
-                    MacUILib_printf("%c", tempPos.symbol);
-                }
                 
                 // Print food symbol randomly
                 else if (i == tempPosFood.y && j == tempPosFood.x)
@@ -142,10 +161,10 @@ void DrawScreen(void)
 
         
         //MacUILib_printf("Input: %c\n", myGM->getInput());
-        MacUILib_printf("BoardSize: %dx%d, Player Position: <%d,%d> + %c\n", 
+        MacUILib_printf("BoardSize: %dx%d\n", 
                         myGM->getBoardSizeX(), 
-                        myGM->getBoardSizeY(), 
-                        tempPos.x, tempPos.y, tempPos.symbol);
+                        myGM->getBoardSizeY() 
+                        );
 
 }
 

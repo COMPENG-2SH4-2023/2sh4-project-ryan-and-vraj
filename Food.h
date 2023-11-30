@@ -10,6 +10,11 @@ class Food
         Food(objPos currentPos);
         ~Food();
 
-        void generateFood(objPos blockOff);
+        void generateFood(objPos blockOff); // you need to upgrade this somehow
+        //need to accept playerbody array list
+        //go through each array list element to make sure they are 
+        //all blocked off from random food gerenatiuon
+        
+    
         void getFoodPos(objPos &returnPos);
 };
