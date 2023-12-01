@@ -87,23 +87,6 @@ void RunLogic(void)
     myPlayer->movePlayer();
     //myPlayer->checkFoodConsumption();
     myGM->clearInput(); //dont repeadtedly process same input
-    // if(checkSelfCollision()){
-    //     myGM->setExitTrue();
-    // }
-    
-    
-    // objPos tempPos; 
-    // myPlayer-> getPlayerPos(tempPos);
-
-    // objPos tempPosFood;
-    // tempFood->getFoodPos(tempPosFood);
-
-    // if((tempPos.x == tempPosFood.x) && (tempPos.y == tempPosFood.y)){
-        
-    // }
-    // if(myPlayer->checkSelfCollision()){
-    //     myGM->setExitTrue();
-    // }
     
 }
 
@@ -120,7 +103,7 @@ void DrawScreen(void)
     //user to get coordinates of tempFood
     objPos tempPosFood;
     food->getFoodPos(tempPosFood);
-    //objPos myPlayer->7, 12, 'W');
+    //objPos myPlayer->(7, 12, 'W');
 
         for (int i = 0; i < myGM->getBoardSizeY(); i++)
         {
@@ -136,18 +119,19 @@ void DrawScreen(void)
                     if(tempBody.x == j && tempBody.y == i){
                         MacUILib_printf("%c", tempBody.symbol);
                         drawn = true;
+                        break;
                     }
 
                 }
                 if(drawn) continue;
-                objPos currentPos(j, i, ' ');
+                //objPos currentPos(j, i, ' ');
                 
 
 
                 if (i == 0 || i == myGM->getBoardSizeY() -1 || j == 0 || j == myGM->getBoardSizeX()-1)
                 {
-                    objPos borderPos(i, j, '#');
-                    MacUILib_printf("%c", borderPos.getSymbol());
+                    //objPos borderPos(i, j, '#');
+                    MacUILib_printf("%c", '#');
                 }
 
                 
@@ -161,7 +145,7 @@ void DrawScreen(void)
                
                 else 
                 {
-                    MacUILib_printf("%c", currentPos.getSymbol());
+                    MacUILib_printf("%c", ' ');
                 }
                 //MacUILib_printf("i: %d j:%d\n", i, j);
             }
@@ -170,6 +154,8 @@ void DrawScreen(void)
 
             
         }
+        
+
 
         
         //MacUILib_printf("Input: %c\n", myGM->getInput());
@@ -177,6 +163,7 @@ void DrawScreen(void)
                         myGM->getBoardSizeX(), 
                         myGM->getBoardSizeY() 
                         );
+        MacUILib_printf("Score: %d\n", myGM->getScore());
 
 }
 

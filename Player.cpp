@@ -93,6 +93,11 @@ void Player::movePlayer()
     int boardX = mainGameMechsRef->getBoardSizeX();
     int boardY = mainGameMechsRef->getBoardSizeY();
 
+    objPos tempPos; //this tempPos will be needed to get position of the snake elements
+    bool samePos = false; //same position flag for suicide
+    
+
+    
 
     if(myDir == UP){
         currHead.y--;
@@ -134,6 +139,21 @@ void Player::movePlayer()
         playerPosList->removeTail();
     }
 
+    //self suicide
+
+    for(int i =1; i < playerPosList->getSize(); i++){
+        playerPosList->getElement(tempPos, i);
+        samePos = tempPos.isPosEqual(&currHead);
+
+        if(samePos){
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+            break;
+        }
+    }
+    
+
+    
 }
 
 
@@ -165,23 +185,8 @@ bool Player::checkFoodConsumption(){
 void Player::increasePlayerLength(){
     objPos currHead;
     playerPosList->getHeadElement(currHead);
-    playerPosList->insertHead(currHead);
+    playerPosList->insertTail(currHead);
 }
 
 
-bool Player::checkSelfCollision(){ //the program suspends immediately whenever snake body is more than one, why?
-    objPos tempPos;
-    playerPosList->getHeadElement(tempPos); //can i just add headPos as a private memeber so i donty have tp declare it everytime i want to use it
-    bool flag = false;
-    
-    for(int i =1; i < playerPosList->getSize(); i++){ //starting from 1 so it can skip the head
-        objPos currHead;
-        playerPosList->getElement(currHead,i); //get the current element of each of the player body
 
-        if(tempPos.isPosEqual(&currHead)){ //if the head touches any other element of the player then collision is detected
-            return true;
-        }
-        flag = tempPos.isPosEqual(&currHead);
-    }
-    return false; // no collisiojn
-}
