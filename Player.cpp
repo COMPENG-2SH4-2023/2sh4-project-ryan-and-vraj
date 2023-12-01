@@ -185,7 +185,7 @@ bool Player::checkFoodConsumption(){
 void Player::increasePlayerLength(){
     objPos currHead;
     playerPosList->getHeadElement(currHead);
-    playerPosList->insertTail(currHead);
+    playerPosList->insertHead(currHead);
 }
 
 
