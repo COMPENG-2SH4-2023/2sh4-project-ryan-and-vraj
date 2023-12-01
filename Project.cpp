@@ -18,7 +18,7 @@ using namespace std;
 //In Advanced OOD, there won't be any global variables
 GameMechs* myGM;
 Player*  myPlayer; // both are references
-Food* tempFood;
+Food* food;
 
 //bool exitFlag; //ask to comment or not
 
@@ -56,15 +56,20 @@ void Initialize(void)
     
 
     myGM = new GameMechs(30,15); // makes the board size 30x15
-    myPlayer = new Player(myGM);
+    food = new Food();
+    myPlayer = new Player(myGM, food);
+    
     //exitFlag = false;
 
     //temporary position of the player
     // objPos tempPos; 
     // myPlayer-> getPlayerPos(tempPos);
-    objPos tempPos{-1,-1,'%'}; // for testing only
-    tempFood = new Food(tempPos); //doublwe check if we need this
-    tempFood->generateFood(tempPos); //how to tunr this into arrayList operation
+    objPosArrayList *tempSnake = myPlayer->getPlayerPos();
+    food->generateFood(tempSnake);
+
+    // objPos tempPos{-1,-1,'%'}; // for testing only
+    // tempFood = new Food(tempPos); //doublwe check if we need this
+    // tempFood->generateFood(tempPos); //how to tunr this into arrayList operation
     
 }
 
@@ -82,6 +87,9 @@ void RunLogic(void)
     myPlayer->movePlayer();
     //myPlayer->checkFoodConsumption();
     myGM->clearInput(); //dont repeadtedly process same input
+    // if(checkSelfCollision()){
+    //     myGM->setExitTrue();
+    // }
     
     
     // objPos tempPos; 
@@ -111,7 +119,7 @@ void DrawScreen(void)
     bool drawn;
     //user to get coordinates of tempFood
     objPos tempPosFood;
-    tempFood->getFoodPos(tempPosFood);
+    food->getFoodPos(tempPosFood);
     //objPos myPlayer->7, 12, 'W');
 
         for (int i = 0; i < myGM->getBoardSizeY(); i++)

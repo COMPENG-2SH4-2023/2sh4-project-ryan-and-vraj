@@ -8,10 +8,10 @@ class Food
 
     public:
         //Food();
-        Food(objPos currentPos);
+        Food();
         ~Food();
 
-        void generateFood(objPos blockOff); // you need to upgrade this somehow
+        void generateFood(objPosArrayList *blockOff); // you need to upgrade this somehow
         //need to accept playerbody array list
         //go through each array list element to make sure they are 
         //all blocked off from random food gerenatiuon

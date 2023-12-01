@@ -4,10 +4,12 @@
 #include "Food.h"
 #include "objPos.h"
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food* foodReference)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
+
+    food = foodReference;
 
     objPos tempPos;
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2,
@@ -23,6 +25,7 @@ Player::Player(GameMechs* thisGMRef)
     // playerPosList->insertHead(tempPos);
     // playerPosList->insertHead(tempPos);
     // playerPosList->insertHead(tempPos);
+    
 
 }
 
@@ -119,9 +122,17 @@ void Player::movePlayer()
     }
 
     //new currenth ead should be inserted ot the head of the list
-    playerPosList->insertHead(currHead);
-    //remopve tail
-    playerPosList->removeTail();
+    
+
+    if(checkFoodConsumption()){
+        // playerPosList->insertHead(currHead);
+        // playerPosList->removeTail();
+        increasePlayerLength();
+    } else {
+
+        playerPosList->insertHead(currHead);
+        playerPosList->removeTail();
+    }
 
 }
 
@@ -134,13 +145,13 @@ bool Player::checkFoodConsumption(){
     objPos currHead;
     playerPosList->getHeadElement(currHead);
     
-    if(currHead.isPosEqual(&tempFoodPos)){
-        increasePlayerLength();
+    if(tempFoodPos.isPosEqual(&currHead)){
+        //increasePlayerLength();
         mainGameMechsRef->incrementScore();
 
         //implement after figuring out how arrayList implementation works
-        // objPosArrayList* playerBody = getPlayerPos();
-        // food->generateFood(*playerBody, currHead);
+        //objPosArrayList* playerBody = getPlayerPos();
+        food->generateFood(playerPosList);
 
         return true;
 
@@ -152,24 +163,25 @@ bool Player::checkFoodConsumption(){
 
 
 void Player::increasePlayerLength(){
-    objPos tailPos;
-    playerPosList->getTailElement(tailPos);
-    playerPosList->insertTail(tailPos);
+    objPos currHead;
+    playerPosList->getHeadElement(currHead);
+    playerPosList->insertHead(currHead);
 }
 
 
 bool Player::checkSelfCollision(){ //the program suspends immediately whenever snake body is more than one, why?
-    objPos headPos;
-    playerPosList->getHeadElement(headPos); //can i just add headPos as a private memeber so i donty have tp declare it everytime i want to use it
-
+    objPos tempPos;
+    playerPosList->getHeadElement(tempPos); //can i just add headPos as a private memeber so i donty have tp declare it everytime i want to use it
+    bool flag = false;
     
     for(int i =1; i < playerPosList->getSize(); i++){ //starting from 1 so it can skip the head
-        objPos currentPos;
-        playerPosList->getElement(currentPos,i); //get the current element of each of the player body
+        objPos currHead;
+        playerPosList->getElement(currHead,i); //get the current element of each of the player body
 
-        if(headPos.isPosEqual(&currentPos)){ //if the head touches any other element of the player then collision is detected
+        if(tempPos.isPosEqual(&currHead)){ //if the head touches any other element of the player then collision is detected
             return true;
         }
+        flag = tempPos.isPosEqual(&currHead);
     }
     return false; // no collisiojn
 }

@@ -13,24 +13,25 @@
 //     foodPos = objPos();
 // }
 
-Food::Food(objPos currentPos)
+Food::Food()
 {
-    foodPos = objPos();
-    generateFood(currentPos);
+    foodPos.setObjPos(-1,-1, '%');
+    //generateFood(currentPos);
+    
 }
 
 Food::~Food()
 {
 
 }
-void Food::generateFood(objPos blockOff)
+void Food::generateFood(objPosArrayList *blockOff)
 {
     srand(time(0));
     int candX = 0;
     int candY = 0;
-    bool flag = false;
+    bool flag = true;
 
-    objPos tempFoodPos; //for food position
+    //objPos tempFoodPos; //for food position
     objPos snakePos;
 
     do 
@@ -40,24 +41,24 @@ void Food::generateFood(objPos blockOff)
         candX = rand() % (BOARD_X - 2) + 1;
         candY = rand() % (BOARD_Y - 2) + 1;
 
-        tempFoodPos = objPos(candX, candY, '%');
+        //tempFoodPos = objPos(candX, candY, '%');
+        foodPos.x = candX;
+        foodPos.y = candY;
 
-        // for(int i= 0; i < blockOff->getSize(); i++){
-        //     blockOff->getElement(snakePos, i);
-        //     // samePos = tempPos.isPosEqual()
-        //     if(tempFoodPos.isPosEqual(&snakePos)){
-        //         flag = true;
-        //     }
-        // }
+        for(int i= 0; i < blockOff->getSize(); i++){
+            blockOff->getElement(snakePos, i);
+            // samePos = tempPos.isPosEqual()
+            flag = snakePos.isPosEqual(&foodPos);
+        }
 
-    } while(blockOff.isPosEqual(&tempFoodPos) && flag);
+    } while(flag);
 
     
 
-    foodPos = tempFoodPos;
+    //foodPos = tempFoodPos;
 }
 
 void Food::getFoodPos(objPos &returnPos)
 {
-    returnPos = foodPos;
+    returnPos.setObjPos(foodPos);
 }
