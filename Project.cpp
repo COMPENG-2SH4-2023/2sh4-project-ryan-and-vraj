@@ -147,7 +147,10 @@ void DrawScreen(void)
                 {
                     MacUILib_printf("%c", ' ');
                 }
+
                 //MacUILib_printf("i: %d j:%d\n", i, j);
+                
+                
             }
 
             MacUILib_printf("\n");
@@ -164,6 +167,8 @@ void DrawScreen(void)
                         myGM->getBoardSizeY() 
                         );
         MacUILib_printf("Score: %d\n", myGM->getScore());
+        
+        
 
 }
 
@@ -175,19 +180,45 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
+    if (myGM->getLoseFlagStatus() == true)
+                {
+                    MacUILib_printf("\nSnake has suicided, Game Over!");
+                    MacUILib_printf("\nYour final score was: %d", myGM->getScore());
+                }
+    
     MacUILib_clearScreen();    
-    //ask about deleting off of the heap    
+    //ask about deleting off of the heap 
+
+    if (myGM->getLoseFlagStatus() == true)
+        {
+            MacUILib_printf("\nSnake has suicided, Game Over!");
+            MacUILib_printf("\nYour final score was: %d", myGM->getScore());
+        }
+
+    else 
+        {
+            MacUILib_printf("\nGame has been exited!");
+            MacUILib_printf("\nYour final score was: %d", myGM->getScore());
+        }
+
+
     
     MacUILib_uninit();
+
+    
 
     //remove heap instances
     delete[] myGM;
     delete[] myPlayer;
+
+    
+
+    
 }
 
 /*
 
-Food foodIntance = Food(player_pos); // objPo, 0, 0, o
+Food foodInstance = Food(player_pos); // objPo, 0, 0, o
 
 
 
