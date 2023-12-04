@@ -17,7 +17,7 @@ using namespace std;
 //OOD benefit, very limited globa variable declaration
 //In Advanced OOD, there won't be any global variables
 GameMechs* myGM;
-Player*  myPlayer; // both are references
+Player*  myPlayer; // aLL are references
 Food* food;
 
 //bool exitFlag; //ask to comment or not
@@ -59,33 +59,27 @@ void Initialize(void)
     food = new Food();
     myPlayer = new Player(myGM, food);
     
-    //exitFlag = false;
 
-    //temporary position of the player
-    // objPos tempPos; 
-    // myPlayer-> getPlayerPos(tempPos);
+    
     objPosArrayList *tempSnake = myPlayer->getPlayerPos();
     food->generateFood(tempSnake);
 
-    // objPos tempPos{-1,-1,'%'}; // for testing only
-    // tempFood = new Food(tempPos); //doublwe check if we need this
-    // tempFood->generateFood(tempPos); //how to tunr this into arrayList operation
+    
     
 }
 
 void GetInput(void)
 {
-   myGM->getInput(); //ask about this section
+   myGM->getInput(); 
 }
 
 
 void RunLogic(void)
 {
-    
-    //myGM->getInput();
+  
     myPlayer-> updatePlayerDir();
     myPlayer->movePlayer();
-    //myPlayer->checkFoodConsumption();
+   
     myGM->clearInput(); //dont repeadtedly process same input
     
 }
@@ -94,16 +88,16 @@ void DrawScreen(void)
 {
    MacUILib_clearScreen(); 
     
-    // objPos tempPos;
-    // myPlayer->getPlayerPos(tempPos); // get player pos
-
+    
+    //for playerPosition
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
     objPos tempBody;
     bool drawn;
+
     //user to get coordinates of tempFood
     objPos tempPosFood;
     food->getFoodPos(tempPosFood);
-    //objPos myPlayer->(7, 12, 'W');
+    
 
         for (int i = 0; i < myGM->getBoardSizeY(); i++)
         {
@@ -116,6 +110,7 @@ void DrawScreen(void)
 
                     playerBody->getElement(tempBody, k);
 
+                    //if the body is equal to the j and i element then you print the symbol
                     if(tempBody.x == j && tempBody.y == i){
                         MacUILib_printf("%c", tempBody.symbol);
                         drawn = true;
@@ -123,14 +118,15 @@ void DrawScreen(void)
                     }
 
                 }
+                //if drawn then dont print anything else
                 if(drawn) continue;
-                //objPos currentPos(j, i, ' ');
+                
                 
 
 
                 if (i == 0 || i == myGM->getBoardSizeY() -1 || j == 0 || j == myGM->getBoardSizeX()-1)
                 {
-                    //objPos borderPos(i, j, '#');
+                    
                     MacUILib_printf("%c", '#');
                 }
 
@@ -167,6 +163,8 @@ void DrawScreen(void)
                         myGM->getBoardSizeY() 
                         );
         MacUILib_printf("Score: %d\n", myGM->getScore());
+        MacUILib_printf("Press escape keyword to end game\n");
+
         
         
 
@@ -187,7 +185,7 @@ void CleanUp(void)
                 }
     
     MacUILib_clearScreen();    
-    //ask about deleting off of the heap 
+   
 
     if (myGM->getLoseFlagStatus() == true)
         {
@@ -216,11 +214,3 @@ void CleanUp(void)
     
 }
 
-/*
-
-Food foodInstance = Food(player_pos); // objPo, 0, 0, o
-
-
-
-
-\*/

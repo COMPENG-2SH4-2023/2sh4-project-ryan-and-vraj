@@ -40,10 +40,10 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
-    if(listSize == arrayCapacity){
+    if(listSize == arrayCapacity){ //error catching
         return;
     }
-    aList[listSize++] = thisPos;
+    aList[listSize++] = thisPos; //insert tail listSize and increment
 }
 
 void objPosArrayList::removeHead()
@@ -88,10 +88,7 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
     if(index >=0 && index < arrayCapacity){
         returnPos = aList[index];
     }
-    // else{
-    //     returnPos.setObjPos('')
-    // }
+    
 }
 
-//Once passed all test cases, copy paste .h and this .cpp file into the project
-//After that should be done
+

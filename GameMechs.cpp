@@ -11,7 +11,7 @@ GameMechs::GameMechs()
     loseFlag = false;
     score = 0;
 
-    foodPos.setObjPos(1, 1, 'o');
+    foodPos.setObjPos(1, 1, 'o'); //deafult pos
     
 
 }
@@ -31,7 +31,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
-    //delete[] GameMechs //what to do??
+    //delete[] GameMechs; //what to do??
 }
 
 bool GameMechs::getExitFlagStatus()

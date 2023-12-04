@@ -9,8 +9,10 @@ Player::Player(GameMechs* thisGMRef, Food* foodReference)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
+    //pass on reference
     food = foodReference;
 
+    //setting position of array list in the middle of the hboard
     objPos tempPos;
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2,
                         mainGameMechsRef->getBoardSizeY()/2,
@@ -20,11 +22,7 @@ Player::Player(GameMechs* thisGMRef, Food* foodReference)
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
 
-    //for debugging purpose, insert anotehr 4 segments
-    // playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
+
     
 
 }
@@ -48,21 +46,19 @@ void Player::updatePlayerDir()
 {
     // PPA3 input processing logic  
 
-    //Where do I get tyhe input?? How do i check for inputs???
-    //Hint1 defintely not by calling macuiliv_getchar()!!
-    //hint 2 coordinate with you team member whos designing game mechanism classs
-    //hint 3 there will be a mthod in GameMecahnism clas that collectively 
-    //checks inoput and store the most recvent input, you just need to figure out
-    //HOw to get to it
-    //HOW??? it lies within the GameMechs* inside private member
+    //get input and switch it depending on case
     char input = mainGameMechsRef->getInput();
     switch(input){
         case 'w': // for w
+
+            //if input is only going left or right or is not moving, then switch to up
             if(myDir == STOP || myDir == LEFT || myDir == RIGHT){
                 myDir = UP;
                 
             }
             break;
+
+        //same logic applies here, if going up, down or stop only then switch to left
         case 'a': //for a
             if(myDir == STOP || myDir == UP || myDir == DOWN){
                 myDir = LEFT;
@@ -130,17 +126,16 @@ void Player::movePlayer()
     
 
     if(checkFoodConsumption()){
-        // playerPosList->insertHead(currHead);
-        // playerPosList->removeTail();
+        //calls on another function
         increasePlayerLength();
     } else {
-
+        //if there is no food consumption then move normally
         playerPosList->insertHead(currHead);
         playerPosList->removeTail();
     }
 
     //self suicide
-
+    //iterate through playerPosList (except for head) and end game when head is equyal to any other position
     for(int i =1; i < playerPosList->getSize(); i++){
         playerPosList->getElement(tempPos, i);
         samePos = tempPos.isPosEqual(&currHead);
@@ -159,18 +154,20 @@ void Player::movePlayer()
 
 bool Player::checkFoodConsumption(){
 
+    //grab temporary food position
     objPos tempFoodPos;
     food->getFoodPos(tempFoodPos);
 
+    //grab current head of snake
     objPos currHead;
     playerPosList->getHeadElement(currHead);
     
+    //if food collides with head then increment score and generate another food
     if(tempFoodPos.isPosEqual(&currHead)){
-        //increasePlayerLength();
+    
         mainGameMechsRef->incrementScore();
 
-        //implement after figuring out how arrayList implementation works
-        //objPosArrayList* playerBody = getPlayerPos();
+        
         food->generateFood(playerPosList);
 
         return true;
@@ -183,6 +180,7 @@ bool Player::checkFoodConsumption(){
 
 
 void Player::increasePlayerLength(){
+    //simply add a head
     objPos currHead;
     playerPosList->getHeadElement(currHead);
     playerPosList->insertHead(currHead);
