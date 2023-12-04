@@ -22,7 +22,7 @@ Food::Food()
 
 Food::~Food()
 {
-
+    
 }
 void Food::generateFood(objPosArrayList *blockOff)
 {

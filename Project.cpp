@@ -208,6 +208,7 @@ void CleanUp(void)
     //remove heap instances
     delete[] myGM;
     delete[] myPlayer;
+    delete[] food;
 
     
 
